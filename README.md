@@ -38,3 +38,10 @@ Reference
 - https://github.com/facebook/react/tree/main/packages/react-devtools#faq
 - https://babeljs.io/docs/en/babel-plugin-transform-react-jsx-source
 - https://github.com/facebook/react/blob/f0efa1164b7ca8523b081223954d05c88e92053b/packages/react-reconciler/src/ReactInternalTypes.js#L193
+
+## For nextjs app router
+
+<img width="2042" alt="image" src="https://github.com/user-attachments/assets/268848fe-399c-4ab0-a2e6-0a544b75cd22">
+
+You need to open the devtools and click into the source in browser
+
