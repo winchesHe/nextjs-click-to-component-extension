@@ -12,9 +12,21 @@ let openInEditorUrl = DEFAULT_OPEN_IN_EDITOR_URL;
 const mousePos = { x: 0, y: 0 };
 let openInEditorMethod = 'url';
 
+const getStackInfo = (fiber: any) => {
+  if (fiber?._debugStack?.stack) {
+    const source = fiber._debugStack.stack.split('\n')?.[2]
+    
+    if (source && !['pnpm', 'yarn', 'bun', 'npm'].some(name => source.includes(name))) {
+      return fiber._debugStack
+    }
+  }
+}
+
 const getInspectName = (element: HTMLElement) => {
   const fiber = findFiberByHostInstance(element);
-  if (!fiber) return "Source code could not be identified.";
+  if (!fiber?._debugSource) {
+    return getStackInfo(fiber)?.toString();
+  };
   const { fileName, columnNumber, lineNumber } = fiber._debugSource;
   const path = (fileName || "").split("/");
 
@@ -64,8 +76,8 @@ const handleInspectorClick = async (e: MouseEvent) => {
   if (!target) return;
 
   const fiber = findFiberByHostInstance(target);
-  if (!fiber) {
-    alert("This element cannot be opened in React Inspector.");
+  if (!fiber?._debugSource) {
+    console.log('getStackInfo', getStackInfo(fiber));
     return;
   }
 

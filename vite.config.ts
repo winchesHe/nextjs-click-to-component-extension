@@ -26,7 +26,7 @@ const manifest = defineManifest({
       description: 'Inspect the page using the "React Inspector" extension.',
     },
   },
-  permissions: ["activeTab", "contextMenus", "storage"],
+  permissions: ["activeTab", "contextMenus", "storage", "debugger"],
 });
 
 export default defineConfig({

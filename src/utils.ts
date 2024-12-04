@@ -21,7 +21,7 @@ export const checkDevtoolsGlobalHook = (): boolean =>
 // TODO Refactoring needed ref react/packages/react-devtools-shared/src/backend/agent.js getBestMatchingRendererInterface
 const getDevtoolsGlobalHookRenderer = () => {
   if (!checkDevtoolsGlobalHook()) return null;
-  return window.__REACT_DEVTOOLS_GLOBAL_HOOK__.renderers.get(1);
+  return window.__REACT_DEVTOOLS_GLOBAL_HOOK__.renderers.values();
 };
 
 export const findFiberByHostInstance = (
@@ -29,12 +29,19 @@ export const findFiberByHostInstance = (
 ): { _debugSource: DebugSource } | null => {
   if (!checkDevtoolsGlobalHook()) return null;
 
-  const renderer = getDevtoolsGlobalHookRenderer();
-  if (!renderer) return null;
+  const renderers = getDevtoolsGlobalHookRenderer();
+  if (!renderers) return null;
+  let fiber = null;
 
-  const fiber = renderer.findFiberByHostInstance(target) || null;
+  for (const renderer of renderers) {
+    const fiberTarget = renderer.findFiberByHostInstance(target) || null;
+    if (fiberTarget) {
+      fiber = fiberTarget;
+      break;
+    }
+  }
 
-  return fiber && fiber._debugSource ? fiber : null;
+  return fiber ? fiber : null;
 };
 
 export const getEditorLink = (

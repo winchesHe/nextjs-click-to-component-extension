@@ -1,0 +1,22 @@
+diff --git a/node_modules/@crxjs/vite-plugin/dist/index.mjs b/node_modules/@crxjs/vite-plugin/dist/index.mjs
+index beadb11..1c623e0 100644
+--- a/node_modules/@crxjs/vite-plugin/dist/index.mjs
++++ b/node_modules/@crxjs/vite-plugin/dist/index.mjs
+@@ -3230,7 +3230,7 @@ const pluginResources = ({ contentScripts = {} }) => {
+               ...rest
+             })).filter(({ resources }) => resources.length);
+             manifest.web_accessible_resources.push({
+-              use_dynamic_url: true,
++              use_dynamic_url: false,
+               matches: ["<all_urls>"],
+               resources: ["**/*", "*"]
+             });
+@@ -3312,7 +3312,7 @@ const pluginResources = ({ contentScripts = {} }) => {
+                     const resource = {
+                       matches: script.matches,
+                       resources: [...assets, ...imports],
+-                      use_dynamic_url: true
++                      use_dynamic_url: false
+                     };
+                     if (css.size)
+                       if (injectCss) {
